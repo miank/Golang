@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 func main() {
 	// declare a slice
@@ -58,4 +61,43 @@ func main() {
 		fmt.Printf("%d %s \n", i, letter)
 	}
 
+	for _, letter := range letters1 {
+		fmt.Printf("%s \n", letter)
+	}
+
+	// Without value
+	i := 0
+	for range letters {
+		fmt.Println(i)
+		i++
+	}
+
+	// Find an item in slice
+
+	source := []string{"san", "man", "tan"}
+	result := findInSlice(source, "san")
+	fmt.Println(result)
+
+	// Convert slice to json
+
+	s1 := []string{"Hello", "World"}
+
+	j, err := json.Marshal(s1)
+	if err != nil {
+		fmt.Printf("Error: %s", err.Error())
+	} else {
+		fmt.Printf(string(j))
+	}
+
+	// FindAndDelete -- need to do
+
+}
+
+func findInSlice(s []string, item string) bool {
+	for _, item := range s {
+		if item == item {
+			return true
+		}
+	}
+	return false
 }
