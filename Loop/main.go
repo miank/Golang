@@ -67,4 +67,34 @@ func main() {
 		k++
 	}
 
+	// For range loop
+
+	letters := []string{"a", "b", "c", "d", "e"}
+
+	for i, x := range letters {
+		fmt.Printf("The values are %d and %s \n", i, x)
+	}
+
+	//Only value
+	fmt.Println("\nOnly value")
+	for _, letter := range letters {
+		fmt.Printf("Value: %s\n", letter)
+	}
+
+	//Only index
+	fmt.Println("\nOnly Index")
+	for i := range letters {
+		fmt.Printf("Index: %d\n", i)
+	}
+
+	//Without index and value. Just print array values
+	fmt.Println("\nWithout Index and Value")
+	x := 0
+	for range letters {
+		fmt.Printf("Index: %d Value: %s\n", i, letters[x])
+		x++
+	}
+
+	// For Loop with a map
+
 }
