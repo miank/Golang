@@ -111,7 +111,17 @@ func main() {
 	fmt.Printf("Item was found : %t\n", result1)
 
 	// Create a slice of string
-	
+	var ss []string
+	ss = make([]string, 4)
+	// appending the slice
+	ss = append(ss, "abc")
+	ss = append(ss, "def")
+	ss = append(ss, "ghi")
+
+	fmt.Println("Looping through the slice")
+	for _, c := range ss {
+		fmt.Println(c)
+	}
 
 }
 
