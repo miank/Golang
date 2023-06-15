@@ -2,11 +2,6 @@ package main
 
 import "fmt"
 
-type employee struct {
-	name   string
-	salary string
-}
-
 func main() {
 	empSalary := map[string]int{}
 	fmt.Println(empSalary)
@@ -44,4 +39,9 @@ func main() {
 	for k, v := range sample {
 		fmt.Printf("Key :%s value : %s \n", k, v)
 	}
+
+	m2 := map[string]int{
+		"a": 1,
+	}
+	fmt.Println(m2)
 }
