@@ -86,18 +86,45 @@ func main() {
 	if err != nil {
 		fmt.Printf("Error: %s", err.Error())
 	} else {
-		fmt.Printf(string(j))
+		fmt.Printf(string(j) + "\n")
 	}
 
 	// FindAndDelete -- need to do
 
+	// Sorting of numbers in slice
+
+	nums := []int{1, 2, 3, 4}
+
+	sortSlice(nums) // to do
+
+	// Copy an slice
+	src := []int{1, 2, 3, 4, 5}
+	dst := make([]int, 5) // Another way to make a slice
+	numberOfElementsCopied := copy(dst, src)
+	fmt.Printf("Number of Elements Copied: %d \n", numberOfElementsCopied)
+	fmt.Printf("src %v \n", src)
+	fmt.Printf("dst %v \n", dst)
+
+	// Find Item in a Slice
+	source1 := []string{"san", "man", "tan"}
+	result1 := findInSlice(source1, "san")
+	fmt.Printf("Item was found : %t\n", result1)
+
+	// Create a slice of string
+	
+
 }
 
-func findInSlice(s []string, item string) bool {
+func findInSlice(s []string, value string) bool {
 	for _, item := range s {
-		if item == item {
+		if item == value {
+			fmt.Printf("Value %s was found at index %s \n", value, item)
 			return true
 		}
 	}
 	return false
+}
+
+func sortSlice(s []int) {
+
 }
