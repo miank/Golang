@@ -73,6 +73,17 @@ func main() {
 
 	// access the age member
 	fmt.Println("Age:", ptr2.age)
+
+	// Default Value of a Pointer
+	var a *int
+	fmt.Println("Default Value of a pointer", a)
+
+	// Pointer Arithmetic
+	fmt.Println("Pointer Arithmetic is not achievable in golang")
+	a1 := 1
+	b := &a1
+	// b = b + 1
+	fmt.Println("b = b + 1 (Pointer Arithmetic) is not possible in Golang", *b, &b)
 }
 
 func callByValue(num int) {
