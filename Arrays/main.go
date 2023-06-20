@@ -30,4 +30,11 @@ func main() {
 		fmt.Println(c)
 	}
 
+	// Array is actually a copy of the existing array
+	arr2 := [...]int{1, 2, 3}
+	arr3 := &arr2
+	arr3[1] = 5
+	fmt.Println(arr2)
+	fmt.Println(arr3)
+
 }
