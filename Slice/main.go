@@ -115,7 +115,7 @@ func main() {
 	ss = make([]string, 4)
 	// appending the slice
 	ss = append(ss, "abc")
-	ss = append(ss, "def")
+	ss = append(ss, "def", "klm")
 	ss = append(ss, "ghi")
 
 	fmt.Println("Looping through the slice")
