@@ -7,7 +7,27 @@ import (
 
 var globalVar = "test"
 
+var c, python, java bool
+
 func main() {
+	var i int
+	fmt.Println(i, c, python, java)
+
+	var aa = "initial"
+	fmt.Println(aa)
+
+	var bb, cc int = 1, 2
+	fmt.Println(bb, cc)
+
+	var dd = true
+	fmt.Println(dd)
+
+	var ee int
+	fmt.Println(ee)
+
+	f := "apple"
+	fmt.Println(f)
+
 	var aaa int
 	fmt.Println(aaa)
 
