@@ -20,6 +20,21 @@ func newPerson(name string) *person {
 	return &p
 }
 
+// Nested Struct
+type Address struct {
+	Street     string
+	City       string
+	State      string
+	PostalCode string
+}
+
+type Person struct {
+	FirstName string
+	LastName  string
+	Age       int
+	Address   Address
+}
+
 func main() {
 	fmt.Println("Structs in Golang")
 	user := User{
@@ -46,5 +61,20 @@ func main() {
 	sp := s
 	sp.age = 22
 	fmt.Println(s.age)
-	
+
+	p := Person{
+		FirstName: "John",
+		LastName:  "Doe",
+		Age:       30,
+		Address: Address{
+			Street:     "123 Main st",
+			City:       "Any Town",
+			State:      "CA",
+			PostalCode: "12345",
+		},
+	}
+
+	fmt.Println(p.FirstName, " ", p.LastName)
+	fmt.Println("Person Struct ", p)
+
 }
