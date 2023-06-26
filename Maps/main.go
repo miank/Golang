@@ -93,4 +93,17 @@ func main() {
 	} else {
 		fmt.Println("Map to Json ", string(j))
 	}
+
+	// Make a map
+	var emp map[string]int
+	emp["Tom"] = 2000
+
+	empSalary2 := map[string]int{
+		"John": 1000,
+		"Sam":  2000,
+	}
+
+	fmt.Println(empSalary2)
+
+	
 }
