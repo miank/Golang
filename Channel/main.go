@@ -2,23 +2,29 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"log"
 )
 
 func main() {
-	ch := make(chan int)
-	fmt.Println(ch)
-	go send(ch)
-	//	fmt.Println(<-ch)
-	go receive(ch)
-	time.Sleep(1000 * time.Millisecond)
+	// Unbuffered channels
+	ch2 := make(chan string, 1)
+	// Buffered Channel
+	ch6 := make(chan int, 16)
 
-}
+	// Send Data on a channel
+	ch6 <- 2
+	ch6 <- 4
 
-func send(ch chan int) {
-	ch <- 6
-}
+	ch2 <- "HelloWorld"
+	received := <-ch6
+	fmt.Println("Data received from channel ", received)
+	// channel closed
+	close(ch6)
 
-func receive(ch chan int) {
-	fmt.Println("Data Received", <-ch)
+	x, ok := <-ch6
+	if !ok {
+		log.Println("Channel is empty or closed")
+	}
+	fmt.Println("The value of x is ", x)
+
 }
