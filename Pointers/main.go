@@ -7,6 +7,32 @@ type Person struct {
 	age  int
 }
 
+func callByValue(num int) {
+	num = 40
+	fmt.Println("Call by Value ", num)
+}
+
+func callByReference(num *int) {
+	*num = 50
+	fmt.Println("Call by reference ", *num)
+}
+
+func update(num *int) {
+	*num = 30
+}
+
+func display() *string {
+	message := "Hello World"
+	return &message
+}
+
+// Passing Pointers
+
+func ptf(a *int) {
+	*a = 74
+	fmt.Printf("The value of parameter changed %d \n", *a)
+}
+
 func main() {
 	var num int = 5
 
@@ -84,23 +110,8 @@ func main() {
 	b := &a1
 	// b = b + 1
 	fmt.Println("b = b + 1 (Pointer Arithmetic) is not possible in Golang", *b, &b)
-}
 
-func callByValue(num int) {
-	num = 40
-	fmt.Println("Call by Value ", num)
-}
-
-func callByReference(num *int) {
-	*num = 50
-	fmt.Println("Call by reference ", *num)
-}
-
-func update(num *int) {
-	*num = 30
-}
-
-func display() *string {
-	message := "Hello World"
-	return &message
+	var x = 100
+	fmt.Println("The value of x before sending ", x)
+	ptf(&x)
 }
