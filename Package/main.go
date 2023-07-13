@@ -1,6 +1,7 @@
 package main
 
-func main() {
-	//hello.SayHello()
+import hello "hello/PackageImport"
 
+func main() {
+	hello.SayHello()
 }
