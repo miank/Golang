@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
 )
 
 func main() {
@@ -27,4 +28,25 @@ func main() {
 	}
 	fmt.Println("The value of x is ", x)
 
+	// For Loop channel
+	ch := make(chan int, 6)
+	ch <- 2
+	ch <- 2
+	ch <- 2
+	ch <- 2
+	ch <- 2
+	ch <- 2
+	close(ch)
+	sum(ch)
+	time.Sleep(time.Second * 1)
+
+	
+}
+
+func sum(ch chan int) {
+	sum := 0
+	for i := range ch {
+		sum += i
+	}
+	fmt.Printf("Sum : %d \n", sum)
 }
