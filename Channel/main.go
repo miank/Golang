@@ -40,7 +40,21 @@ func main() {
 	sum(ch)
 	time.Sleep(time.Second * 1)
 
-	
+	// Receive and Fetch Value from a channel
+
+	result := make(chan int, 1)
+
+	go add(2, 4, result)
+
+	value := result
+	fmt.Printf("Total value : %d\n", <-value)
+	close(result)
+}
+
+func add(a, b int, result chan int) {
+	sumValue := a + b
+	result <- sumValue
+	return
 }
 
 func sum(ch chan int) {
