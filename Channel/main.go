@@ -49,6 +49,23 @@ func main() {
 	value := result
 	fmt.Printf("Total value : %d\n", <-value)
 	close(result)
+
+	// Length and Capacity
+	// Length is the number of elements in a channel
+	// Capacity is the size of the buffered channel
+
+	ch4 := make(chan int, 4)
+	ch4 <- 5
+	fmt.Printf("Len: %d\n", len(ch4))
+	fmt.Printf("Capacity: %d\n", cap(ch4))
+
+	ch4 <- 6
+	fmt.Printf("Len: %d\n", len(ch4))
+	fmt.Printf("Capacity: %d\n", cap(ch4))
+
+	ch4 <- 7
+	fmt.Printf("Len: %d\n", len(ch4))
+	fmt.Printf("Capacity: %d\n", cap(ch4))
 }
 
 func add(a, b int, result chan int) {
