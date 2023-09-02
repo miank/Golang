@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -11,8 +12,7 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	input, err := reader.ReadString('\n')
 	if err != nil {
-		fmt.Print("Error reading the input")
-		return
+		log.Fatal(err) // Report the err and stop it
 	}
 	fmt.Println(input)
 }
