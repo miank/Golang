@@ -68,6 +68,13 @@ func main() {
 	result := math.Max(4, 5)
 	fmt.Println(result)
 
+	// format specifier for Bool
+	t1 := true
+	f1 := false
+
+	fmt.Printf("%t %t \n", t1, f1)
+	fmt.Printf("%v %v \n", t1, f1)
+
 	testGlobal()
 }
 
