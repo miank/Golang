@@ -5,6 +5,7 @@ import (
 	"math"
 )
 
+// global variable
 var globalVar = "test"
 
 var c, python, java bool
@@ -39,7 +40,7 @@ func main() {
 	fmt.Printf("a = %d, b = %d, c = %d \n ", a, b, c)
 
 	var d, e int = 2, 4
-	fmt.Println("The value of d = %d & e = %d \n", d, e)
+	fmt.Printf("The value of d = %d & e = %d \n", d, e)
 
 	var (
 		a1 int
