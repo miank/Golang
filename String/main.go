@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 	str := "Hello"
@@ -15,4 +18,11 @@ func main() {
 	}
 
 	fmt.Printf("Printing the character of string %c", str[0])
+
+	// Repeat string
+	copy := strings.Repeat("a", 2)
+	fmt.Println(copy)
+
+	copy = strings.Repeat("abc", 3)
+	fmt.Println(copy)
 }
