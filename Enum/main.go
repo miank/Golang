@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 const (
-	smallSize = iota
-	medium
+	smallSize = 2
+	medium    = iota
 	large
 	extraSize
 )
