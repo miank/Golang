@@ -13,7 +13,7 @@ func main() {
 	fmt.Printf("Size : %d\n Type: %s\nCharacter: %c", unsafe.Sizeof(c), reflect.TypeOf(c), c)
 
 	r := '£'
-	fmt.Println("\nPriting Rune:")
+	fmt.Println("\nPrinting Rune:")
 	//Print Size, Type, CodePoint and Character
 	fmt.Printf("Size: %d\nType: %s\nUnicode CodePoint: %U\nCharacter: %c\n", unsafe.Sizeof(r), reflect.TypeOf(r), r, r)
 
