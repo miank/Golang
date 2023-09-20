@@ -109,4 +109,16 @@ func main() {
 	for n := range ch{
 		fmt.Println(n)
 	}
+
+	// Map iterations
+	fmt.Println("Map Iterations")
+	m := map[string]int{
+		"one" : 1,
+		"two" : 2,
+		"three" : 3, 
+	}
+
+	for k, v := range m{
+		fmt.Println(k ,v)
+	}
 }
