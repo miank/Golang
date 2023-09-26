@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 func main() {
 
@@ -49,6 +52,33 @@ func main() {
 
 	val, ok = employeeSalary["Sam"]
 	fmt.Printf("Val: %d, ok: %t\n", val, ok)
+
+	m1 := map[string]int{}
+	fmt.Println(m1)
+
+	m2 := make(map[string]string)
+	fmt.Println(m2)
+
+	// Creating a nil map
+	var employeeSalary1 map[string]int
+	fmt.Println(employeeSalary1)
+	// This will panic as we are trying to create
+	// employeeSalary1["Tom"] = 2000
+
+	// Maps to JSON
+	a := make(map[int]string)
+	a[1] = "John"
+	j, err := json.Marshal(a)
+	if err != nil {
+		fmt.Printf("Error : %s", err.Error())
+	} else {
+		fmt.Println(string(j))
+	}
+
+	// Unmarshall json to map
+	var b map[int]string
+	json.Unmarshal(j, &b)
+	fmt.Println(b)
 
 }
 
