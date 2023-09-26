@@ -30,7 +30,7 @@ func main() {
 
 	// length of the map
 	employeeSalary := make(map[string]int)
-	employeeSalary["Alex"] = 2000
+	employeeSalary["Tom"] = 2000
 	employeeSalary["Sam"] = 1200
 
 	for k1, v1 := range employeeSalary {
@@ -39,6 +39,16 @@ func main() {
 
 	lenOfMap := len(employeeSalary)
 	fmt.Println("Length of map is ", lenOfMap)
+
+	// Check If key exist
+	fmt.Println("Key exists case")
+	val, ok := employeeSalary["Tom"]
+	fmt.Printf("Val: %d, ok: %t\n", val, ok)
+
+	fmt.Println("Key doesn't exists case")
+
+	val, ok = employeeSalary["Sam"]
+	fmt.Printf("Val: %d, ok: %t\n", val, ok)
 
 }
 
