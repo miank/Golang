@@ -76,9 +76,15 @@ func main() {
 	}
 
 	// Unmarshall json to map
-	var b map[int]string
-	json.Unmarshal(j, &b)
-	fmt.Println(b)
+	// var b map[int]string
+	// json.Unmarshal(j, &b)
+	// fmt.Println(b)
+
+	// Converting json to map
+	j1 := `{"1": "JOHN"}`
+	var b1 map[string]string
+	json.Unmarshal([]byte(j1), &b1)
+	fmt.Println(m2)
 
 }
 
