@@ -22,10 +22,10 @@ func main() {
 }
 
 func concurrentTask(taskNumber int, waitGroup *sync.WaitGroup) {
+	defer waitGroup.Done()
 	fmt.Printf("BEGIN Execute task number %d \n", taskNumber)
 	time.Sleep(1000 * time.Millisecond)
 	fmt.Printf("END Execute task number %d \n", taskNumber)
-	waitGroup.Done()
 
 }
 
