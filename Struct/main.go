@@ -28,6 +28,7 @@ type Address struct {
 	PostalCode string
 }
 
+// Nested Struct
 type Person struct {
 	FirstName string
 	LastName  string
