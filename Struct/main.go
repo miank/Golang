@@ -36,6 +36,12 @@ type Person struct {
 	Address   Address
 }
 
+type Employee struct {
+	name   string
+	age    int
+	salary int
+}
+
 func main() {
 	fmt.Println("Structs in Golang")
 	user := User{
@@ -78,4 +84,11 @@ func main() {
 	fmt.Println(p.FirstName, " ", p.LastName)
 	fmt.Println("Person Struct ", p)
 
+	// Pointer and struct in Go
+
+	emp := Employee{name: "Sam", age: 31, salary: 2000}
+	empP := &emp
+	fmt.Printf("Emp: %+v\n", empP)
+	empP = &Employee{name: "John", age: 30, salary: 3000}
+	fmt.Printf("Emp: %+v\n", empP)
 }
