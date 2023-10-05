@@ -2,27 +2,19 @@ package main
 
 import "fmt"
 
-func entry(lang *string, aname *string) {
+func main() {
 
-	// Defer statement
-	defer fmt.Println("Defer statement is the entry function \n")
-
-	if lang == nil {
-		panic("Error : Language cannot be nil")
-	}
-
-	if aname == nil {
-		panic("Error : Author name cannot be nil")
-	}
-
-	fmt.Printf("Author Langauge: %s \n Author Name: %s\n", *lang, *aname)
-
+	f1()
 }
 
-func main() {
-	A_Lang := "Go Language"
+func f1() {
+	defer fmt.Println("Defer in f1")
+	f2()
+	fmt.Println("After panic in f1")
+}
 
-	defer fmt.Printf("Defer statement in the Main function \n")
-	entry(&A_Lang, nil)
-
+func f2() {
+	defer fmt.Println("Defer in f2")
+	panic("Panic Demo")
+	fmt.Println("After panic in f2")
 }
