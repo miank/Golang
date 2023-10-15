@@ -3,26 +3,45 @@ package main
 import "fmt"
 
 type animal interface {
-	breathe()
 	walk()
+	breathe()
 }
 
 type lion struct {
 	age int
 }
 
-func (l lion) breathe() {
-	fmt.Println("The lion breathes")
+type dog struct {
+	age int
 }
 
 func (l lion) walk() {
-	fmt.Println("The lion walks ")
+	fmt.Println("Lion walk")
+}
 
+func (l lion) breathe() {
+	fmt.Println("Lion breathes")
+}
+
+func (l dog) breathe() {
+	fmt.Println("Dog breathes")
+}
+
+func (l dog) walk() {
+	fmt.Println("Dog walk")
 }
 
 func main() {
+	ll := lion{
+		24,
+	}
+
 	var a animal
-	a = lion{age: 12}
+	a = ll
+	a.breathe()
+	a.walk()
+
+	a = dog{age: 5}
 	a.breathe()
 	a.walk()
 }
