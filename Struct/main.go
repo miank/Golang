@@ -2,93 +2,51 @@ package main
 
 import "fmt"
 
-type User struct {
-	Name   string
-	Email  string
-	Status bool
-	Age    int
-}
-
-type person struct {
-	name string
-	age  int
-}
-
-func newPerson(name string) *person {
-	p := person{name: name}
-	p.age = 42
-	return &p
-}
-
-// Nested Struct
-type Address struct {
-	Street     string
-	City       string
-	State      string
-	PostalCode string
-}
-
-// Nested Struct
-type Person struct {
-	FirstName string
-	LastName  string
-	Age       int
-	Address   Address
-}
-
-type Employee struct {
+type employee struct {
 	name   string
 	age    int
 	salary int
 }
 
+type point struct {
+	x float64
+	y float64
+}
+
 func main() {
-	fmt.Println("Structs in Golang")
-	user := User{
-		Name:   "Hitesh",
-		Email:  "Hitesh@gmail.com",
-		Status: true,
-		Age:    22,
-	}
-	fmt.Printf("User Details are %+v: \n", user)
-	fmt.Printf("User Name is %v, Email is %v and age is %v: \n", user.Name, user.Email, user.Age)
-
-	fmt.Println(&person{
-		name: "Fred",
-	})
-
-	fmt.Println(newPerson("John"))
-
-	s := person{
-		name: "Sean",
-		age:  50,
-	}
-	fmt.Println(s)
-
-	sp := s
-	sp.age = 22
-	fmt.Println(s.age)
-
-	p := Person{
-		FirstName: "John",
-		LastName:  "Doe",
-		Age:       30,
-		Address: Address{
-			Street:     "123 Main st",
-			City:       "Any Town",
-			State:      "CA",
-			PostalCode: "12345",
-		},
+	e := employee{}
+	fmt.Println(e)
+	emp := employee{
+		name:   "Sam",
+		age:    31,
+		salary: 2000,
 	}
 
-	fmt.Println(p.FirstName, " ", p.LastName)
-	fmt.Println("Person Struct ", p)
+	fmt.Printf("emp : %v\n", emp)
+	fmt.Printf("emp : %+v\n", emp)
+	fmt.Printf("emp : %#v\n", emp)
+	fmt.Println(emp)
 
-	// Pointer and struct in Go
+	n := emp.name
+	fmt.Printf("Current Name is  : %+v\n", n)
 
-	emp := Employee{name: "Sam", age: 31, salary: 2000}
-	empP := &emp
-	fmt.Printf("Emp: %+v\n", empP)
-	empP = &Employee{name: "John", age: 30, salary: 3000}
-	fmt.Printf("Emp: %+v\n", empP)
+	emp.name = "John"
+	fmt.Printf("New Name is : %s\n", emp.name)
+
+	// Creating struct without field names
+	emp1 := employee{"John", 32, 4000}
+
+	fmt.Printf("emp : %v\n", emp1)
+	fmt.Printf("emp : %+v\n", emp1)
+	fmt.Printf("emp : %#v\n", emp1)
+	fmt.Println(emp)
+
+	// Pointer to struct
+	empP := &emp1
+	fmt.Printf("EmpP: %v\n", empP)
+
+	// Another way of creating pointer to struct
+	empP1 := &employee{"John", 32, 4000}
+	fmt.Printf("EmpP1: %v\n", empP1)
+
 }
