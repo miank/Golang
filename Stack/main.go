@@ -18,7 +18,6 @@ func (s *Stack) Push(value interface{}) {
 	s.items = append(s.items, value)
 	s.top++
 	fmt.Printf("Inserted Value %v\n", value)
-	return
 }
 
 func (s *Stack) Pop() interface{} {
