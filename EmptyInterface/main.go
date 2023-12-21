@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+// Any empty interface has no methods, by default all types implement the empty interface.
+
 func main() {
 	test("thisisstring")
 	test(10)
