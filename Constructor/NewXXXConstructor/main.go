@@ -7,24 +7,24 @@ type Movie struct {
 	rating int
 }
 
-// Creating using Init Method
-
-func (m *Movie) init(title string, rating int) {
-	m.title = title
-	m.rating = rating
-}
-
 func (m *Movie) printTitle() {
-	fmt.Printf("Movie title is :%s\n", m.title)
+	fmt.Printf("Movie title is :%s \n", m.title)
 }
-
 func (m *Movie) printRating() {
 	fmt.Printf("Rating is :%d \n", m.rating)
 }
 
+// Using NewXXX Constructor
+func NewMovie(title string, rating int) *Movie {
+	m := &Movie{
+		title:  title,
+		rating: rating,
+	}
+	return m
+}
+
 func main() {
-	m := new(Movie) // Movie{}
-	m.init("Free Guy", 5)
+	m := NewMovie("Top Gun Maverick", 5)
 	m.printTitle()
 	m.printRating()
 }
