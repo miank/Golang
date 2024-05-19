@@ -2,33 +2,35 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"sync"
 	"time"
 )
 
-func main() {
-	fmt.Println("Wait Group")
-
-	var waitGroup sync.WaitGroup
-	waitGroup.Add(10)
-
-	for i := 0; i < 10; i++ {
-		go concurrentTask(i, &waitGroup)
+func retrieve(url string, wg *sync.WaitGroup) {
+	defer wg.Done()
+	start := time.Now()
+	res, err := http.Get(url)
+	end := time.Since(start)
+	if err != nil {
+		panic(err)
 	}
 
-	waitGroup.Wait()
-	finishTask()
-	fmt.Printf("Program end \n")
+	fmt.Println(url, res.StatusCode, end)
 }
 
-func concurrentTask(taskNumber int, waitGroup *sync.WaitGroup) {
-	defer waitGroup.Done()
-	fmt.Printf("BEGIN Execute task number %d \n", taskNumber)
-	time.Sleep(1000 * time.Millisecond)
-	fmt.Printf("END Execute task number %d \n", taskNumber)
+func main() {
+	var wg sync.WaitGroup
 
-}
+	var urls = []string{
+		"https://godoc.org", "https://www.packtpub.com", "https://kubernetes.io/",
+	}
 
-func finishTask() {
-	fmt.Printf("Executing finish task")
+	for i := range urls {
+		wg.Add(1)
+		go retrieve(urls[i], &wg)
+	}
+
+	wg.Wait()
+
 }
