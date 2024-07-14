@@ -5,25 +5,37 @@ import (
 	"time"
 )
 
+// Produce function simulates a producer generating items and sending them to the channel
+func produce(ch chan<- int, id int) {
+	for i := 0; ; i++ {
+		fmt.Printf("Producer %d: producing item %d\n", id, i)
+		ch <- i
+		time.Sleep(time.Millisecond * 500) // simulate time taken to produce an item
+	}
+}
+
+// Consume function simulates a consumer receiving items from the channel
+func consume(ch <-chan int, id int) {
+	for {
+		item := <-ch
+		fmt.Printf("Consumer %d: consuming item %d\n", id, item)
+		time.Sleep(time.Second) // simulate time taken to consume an item
+	}
+}
+
 func main() {
-	ch := make(chan int, 3)
+	buffer := make(chan int, 10) // buffered channel with a capacity of 10
 
-	// Producer goroutine
-	go func() {
-		for i := 0; i <= 5; i++ {
-			ch <- i
-			fmt.Println("Produced: ", i)
-		}
-		close(ch)
-	}()
+	// Start producer goroutines
+	for i := 0; i < 3; i++ {
+		go produce(buffer, i)
+	}
 
-	// Consumer goroutine
-	go func() {
-		for num := range ch {
-			fmt.Println("Consumed: ", num)
-			time.Sleep(time.Second)
-		}
-	}()
+	// Start consumer goroutines
+	for i := 0; i < 2; i++ {
+		go consume(buffer, i)
+	}
 
-	time.Sleep(3 * time.Second)
+	// Let the goroutines run for a while
+	time.Sleep(time.Second * 3)
 }
