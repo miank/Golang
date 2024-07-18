@@ -1,89 +1,42 @@
 package main
 
-import "fmt"
-
-var stackSize int
+import (
+	"errors"
+	"fmt"
+)
 
 type Stack struct {
-	items []interface{}
-	top   int
+	items []int
 }
 
-func (s *Stack) Push(value interface{}) {
-	if s.top == stackSize-1 {
-		fmt.Println("Stack Overflow, cannot insert more values")
-		return
-	}
-
-	s.items = append(s.items, value)
-	s.top++
-	fmt.Printf("Inserted Value %v\n", value)
+func (s *Stack) Push(data int) {
+	s.items = append(s.items, data)
 }
 
-func (s *Stack) Pop() interface{} {
-	if s.top == -1 {
-		fmt.Println("Stack underflow, No values to remove")
-		return nil
+func (s *Stack) Pop() (int, error) {
+	if len(s.items) == 0 {
+		return 0, errors.New("Stack is empty")
 	}
 
-	poppedElement := s.items[s.top]
-	s.items = s.items[:s.top]
-	s.top--
-	fmt.Printf("Popped element is %d \n", poppedElement)
-	fmt.Printf("Current stack is %d \n", s)
-	return poppedElement
+	item := s.items[len(s.items)-1]
+	s.items = s.items[:len(s.items)-1]
+	return item, nil
 }
 
-func (s *Stack) IsEmpty() {
-	if s.top == -1 {
-		fmt.Println("Stack is empty")
-		return
-	}
-
-	fmt.Println("Stack is not empty")
-}
-
-func (s *Stack) IsFull() {
-	if s.top == stackSize-1 {
-		fmt.Println("Stack is full")
-		return
-	}
-
-	fmt.Println("Stack is not full")
-}
-
-func (s *Stack) Peek() interface{} {
-	if s.top == -1 {
-		fmt.Println("Stack is empty")
-		return -1
-	}
-
-	fmt.Printf("Removed value %v\n", s.items[s.top])
-	element := s.items[s.top]
-	return element
-}
-
-func (s *Stack) Display() {
-	for _, v := range s.items {
-		fmt.Println(v)
-	}
+func (s *Stack) IsEmpty() bool {
+	return len(s.items) == 0
 }
 
 func main() {
-	s := Stack{
-		items: []interface{}{1},
-		top:   0,
+	stack := Stack{}
+	stack.Push(1)
+	stack.Push(2)
+	stack.Push(3)
+
+	fmt.Println(stack)
+
+	for !stack.IsEmpty() {
+		item, _ := stack.Pop()
+		fmt.Println(item)
 	}
-
-	s.Push(2)
-	s.Push(3)
-	s.Push(4)
-	s.Push(5)
-	s.Push(6)
-	s.Pop()
-	s.Display()
-	s.Peek()
-	s.Pop()
-	s.Display()
-
 }
