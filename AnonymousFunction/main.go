@@ -4,20 +4,16 @@ import "fmt"
 
 func main() {
 	func() {
-		fmt.Println("anonymous function")
+		fmt.Println("Hello World !!!")
 	}()
 
-	myFunc := func() {
-		fmt.Println("This is another anonymous function")
+	res := max(2, 3)
+	fmt.Println(res)
+}
+
+var max = func(a, b int) int {
+	if a >= b {
+		return a
 	}
-
-	// Named anonymous function
-	add := func(a, b int) int {
-		return a + b
-	}
-
-	result := add(3, 5)
-	fmt.Println(result)
-
-	myFunc()
+	return b
 }
