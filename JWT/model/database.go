@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -45,4 +46,15 @@ func envVariable(key string) string {
 type User struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
+}
+
+func (u *User) GeneratePasswordHarsh() error {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(u.Password), 14)
+	u.Password = string(bytes)
+	return err
+}
+
+func (u *User) CheckPasswordHarsh() bool {
+	err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(u.Password))
+	return err == nil
 }
