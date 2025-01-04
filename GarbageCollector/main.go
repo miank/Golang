@@ -5,24 +5,30 @@ import (
 	"runtime"
 )
 
-type Object struct {
-	reference *Object
-}
-
 func main() {
-	// Initial setup
-	obj1 := &Object{}                // This object will be marked as grey initially
-	obj2 := &Object{reference: obj1} // Another object referencing obj1
+	// Allocate some memory for the program to use
+	s := make([]string, 0, 100000)
+	for i := 0; i < 100000; i++ {
+		s = append(s, "hello, world")
+	}
 
-	// This is where the tri-color algorithm kicks in
-	obj1.reference = obj2 // Creating a circular reference
+	// Print the initial memory usage
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+	fmt.Println("Initial HeapAlloc: ", m.HeapAlloc)
 
-	// Unsetting obj1 and obj2 to make them eligible for GC
-	obj1 = nil
-	obj2 = nil
-
-	// Forcing a garbage collection cycle
+	// Trigger the garbage collector
 	runtime.GC()
 
-	fmt.Println("Garbage Collection executed")
+	// Print the memory usage after the garbage collector has run
+	runtime.ReadMemStats(&m)
+	fmt.Println("After GC HeapAlloc: ", m.HeapAlloc)
+
+	// Release the memory
+	s = nil
+	// Trigger the garbage collector
+	runtime.GC()
+	// Print the memory usage after the garbage collector has run
+	runtime.ReadMemStats(&m)
+	fmt.Println("After release HeapAlloc: ", m.HeapAlloc)
 }
