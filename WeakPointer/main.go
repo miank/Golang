@@ -8,23 +8,41 @@ package main
 import (
 	"fmt"
 	"runtime"
+	"sync"
 )
 
-type MyData struct {
-	Name string
+type WeakCache struct {
+	data sync.Map
+}
+
+func (wc *WeakCache) Set(key string, value interface{}) {
+	// Set the key-value pair in the map
+	wc.data.Store(key, value)
+
+	// Attach a finalizer to remove the key when the value is garbage-collected
+	runtime.SetFinalizer(value, func(v interface{}) {
+		wc.data.Delete(key)
+	})
+}
+
+func (wc *WeakCache) Get(key string) (interface{}, bool) {
+	return wc.data.Load(key)
 }
 
 func main() {
-	obj := &MyData{Name: "WeakPointerExample"}
+	cache := &WeakCache{}
 
-	// Set a finalizer to observe garbage collection
-	runtime.SetFinalizer(obj, func(o *MyData) {
-		fmt.Println("Object finalized:", o.Name)
-	})
+	// Create an object and store it in the cache
+	obj := &struct{ Name string }{Name: "WeakRef"}
+	cache.Set("example", obj)
 
-	// Remove strong references
+	fmt.Println("Before GC:", cache.Get("example"))
+
+	// Remove the strong reference
 	obj = nil
 
-	// Force garbage collection (not recommended in production)
+	// Force garbage collection
 	runtime.GC()
+
+	fmt.Println("After GC:", cache.Get("example"))
 }
