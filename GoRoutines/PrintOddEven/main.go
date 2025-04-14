@@ -1,3 +1,6 @@
+// Print Even and Odd Numbers Using Goroutines
+// Create two goroutines: one prints even numbers, the other odd numbers up to n, taking turns.
+
 package main
 
 import (
@@ -5,36 +8,34 @@ import (
 	"sync"
 )
 
-func Even(ch chan bool, wg *sync.WaitGroup) {
+func Even(ch chan int, wg *sync.WaitGroup) {
 	defer wg.Done()
-	for i := 0; i < 10; i++ {
-		if i%2 == 0 {
-			<-ch // Wait for signal
-			fmt.Printf("Even Element %d\n", i)
-			ch <- true
-		}
+	for i := 0; i <= 10; i += 2 {
+		<-ch // wait for signal
+		fmt.Println("Even:", i)
+		ch <- 1 // signal odd
 	}
-
 }
 
-func Odd(ch chan bool, wg *sync.WaitGroup) {
+func Odd(ch chan int, wg *sync.WaitGroup) {
 	defer wg.Done()
-	for i := 1; i < 10; i++ {
-		if i%2 != 0 {
-			<-ch // Wait for signal
-			fmt.Printf("Odd Element %d\n", i)
-			ch <- true
-		}
+	for i := 1; i <= 10; i += 2 {
+		<-ch // wait for signal
+		fmt.Println("Odd:", i)
+		ch <- 0 // signal even
 	}
+
 }
 
 func main() {
-	ch := make(chan bool, 1)
+
+	ch := make(chan int, 1)
 	var wg sync.WaitGroup
 	wg.Add(2)
 	go Even(ch, &wg)
 	go Odd(ch, &wg)
-	ch <- true // Start with true to print even
+	ch <- 1
+
 	wg.Wait()
 	close(ch)
 }
