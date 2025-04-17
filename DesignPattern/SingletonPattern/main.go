@@ -13,7 +13,8 @@ type single struct {
 
 var (
 	singleInstance,
-	singleInstance_1 *single
+	singleInstance_1,
+	singleInstance_2 *single
 )
 
 func getInstance() *single {
@@ -47,13 +48,30 @@ func getInstance_1() *single {
 	return singleInstance_1
 }
 
+func getInstance_2() *single {
+	once.Do(func() {
+		fmt.Println("Creating Singleton instance...")
+		singleInstance_2 = &single{}
+	})
+	return singleInstance_2
+}
+
 func main() {
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 5; i++ {
 		go getInstance()
 	}
 
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 5; i++ {
 		go getInstance_1()
 	}
+
+	s1 := getInstance_2()
+	fmt.Println(s1)
+
+	s2 := getInstance_2()
+	fmt.Println(s2)
+
+	// Confirm that both instances are the same
+	fmt.Println("Are instances equal?", s1 == s2) // Output: true
 	fmt.Scanln()
 }
