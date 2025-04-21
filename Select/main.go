@@ -5,6 +5,9 @@ import (
 	"time"
 )
 
+// If you must use default, only do it for non-blocking checks.
+// Otherwise, it’ll skip even if channels aren’t ready.
+
 func main() {
 	ch1 := make(chan string)
 	ch2 := make(chan string)
@@ -24,7 +27,6 @@ func main() {
 		fmt.Println("Received:", msg1)
 	case msg2 := <-ch2:
 		fmt.Println("Received:", msg2)
-	default:
-		fmt.Println("No Channel is ready yet")
 	}
+
 }
