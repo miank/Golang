@@ -2,6 +2,10 @@ package paymentsystem
 
 import "fmt"
 
+// Real-world analogy:
+// Imagine PaymentProcessor is like a plug type, and MakePayment is a wall socket that accepts any plug that fits.
+// As long as the plug (i.e., the object p) has the correct shape (i.e., implements ProcessPayment), it can be used.
+
 type PaymentProcessor interface {
 	ProcessPayment(amount float64) error
 }
@@ -20,6 +24,7 @@ func (p PayPal) ProcessPayment(amount float64) error {
 	return nil
 }
 
+// Important
 func MakePayment(p PaymentProcessor, amount float64) {
 	p.ProcessPayment(amount)
 }
