@@ -1,73 +1,40 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	paymentsystem "interfaceExample/PaymentSystem"
+)
 
-type animal interface {
-	walk()
-	breathe()
-}
-type mammal interface {
-	feed()
-}
+// Both Dog and Cat satisfy the Speaker interface because they both have a Speak() method.
 
-type lion struct {
-	age int
+// Define an interface
+type Speaker interface {
+	Speak()
 }
 
-type dog struct {
-	age int
+// Define a struct
+type Dog struct{}
+
+func (d Dog) Speak() {
+	fmt.Println("Woof!")
 }
 
-// Non - struct Custom Type
-type cat string
+type Cat struct{}
 
-func (l lion) walk() {
-	fmt.Println("Lion walk")
-}
-
-func (l lion) breathe() {
-	fmt.Println("Lion breathes")
-}
-
-func (l lion) feed() {
-	fmt.Println("Lion feeds young")
-}
-
-func (d *dog) breathe() {
-	fmt.Println("Dog breathes")
-}
-
-func (d *dog) walk() {
-	fmt.Println("Dog walk")
-}
-
-func (c cat) breathe() {
-	fmt.Println("Cat breathes")
-}
-
-func (c cat) walk() {
-	fmt.Println("Cat walk")
+func (c Cat) Speak() {
+	fmt.Println("Meow!")
 }
 
 func main() {
-	var a animal
-	var m mammal
+	var s Speaker
+	s = Dog{}
+	s.Speak() // Output : Woof!
 
-	l := lion{
-		24,
-	}
+	s = Cat{}
+	s.Speak() // Output : Meow!
 
-	a = &l
-	a.breathe()
-	a.walk()
-	m = l
-	m.feed()
-
-	a = &dog{age: 5}
-	a.breathe()
-	a.walk()
-
-	a = cat("smokey")
-	a.breathe()
-	a.walk()
+	stripe := paymentsystem.Stripe{}
+	paymentsystem.MakePayment(stripe, 100.0)
+	paypal := paymentsystem.Stripe{}
+	paymentsystem.MakePayment(paypal, 50.0)
 }

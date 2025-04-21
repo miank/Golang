@@ -2,9 +2,10 @@ package main
 
 import "fmt"
 
-type salaryCalc interface{}
+func PrintAnything(v interface{}) {
+	fmt.Println(v)
+}
 
 func main() {
-	var s salaryCalc
-	fmt.Println(s)
+	PrintAnything("Hello World !!")
 }
