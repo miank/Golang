@@ -25,6 +25,8 @@ func main() {
 			fmt.Println("Received:", msg1)
 		case msg2 := <-ch2:
 			fmt.Println("Received:", msg2)
+		case <-time.After(1 * time.Second):
+			fmt.Println("Timeout : no messsage received")
 		}
 	}
 }
