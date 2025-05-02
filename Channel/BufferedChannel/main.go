@@ -22,4 +22,9 @@ func main() {
 	for x := range ch1 {
 		fmt.Println(x)
 	}
+
+	ch2 := make(chan string, 1)
+	ch2 <- "hello"
+
+	fmt.Println(<-ch2)
 }
