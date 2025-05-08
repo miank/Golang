@@ -8,49 +8,36 @@ package main
 import (
 	"fmt"
 	"math/big"
-	"sync"
 )
 
-func task1(output chan int, wg *sync.WaitGroup) {
-	defer wg.Done()
-
-	sum := 0
-	for i := 1; i <= 100; i++ {
-		sum += i
-	}
-
-	output <- sum
-
-	close(output)
-
-}
-
-func task2(output1 chan *big.Int, wg *sync.WaitGroup) {
-	defer wg.Done()
-
-	prod := big.NewInt(1)
-	for i := 1; i <= 100; i++ {
-		prod.Mul(prod, big.NewInt(int64(i)))
-	}
-	output1 <- prod
-
-	close(output1)
-}
-
 func main() {
-	ch1 := make(chan int)
-	ch2 := make(chan *big.Int)
+	ch := make(chan interface{}, 2)
 
-	var wg sync.WaitGroup
+	go func() {
+		// Calculate sum
+		sum := 0
+		for i := 1; i <= 100; i++ {
+			sum += i
+		}
+		ch <- sum
 
-	wg.Add(2)
+		// Calculate product
+		prod := big.NewInt(1)
+		for i := 1; i <= 100; i++ {
+			prod.Mul(prod, big.NewInt(int64(i)))
+		}
+		ch <- prod
+	}()
 
-	go task1(ch1, &wg)
-	go task2(ch2, &wg)
-
-	fmt.Println(<-ch1)
-	fmt.Println(<-ch2)
-
-	wg.Wait()
+	// Receive and print both results
+	for i := 0; i < 2; i++ {
+		result := <-ch
+		switch v := result.(type) {
+		case int:
+			fmt.Println("Sum:", v)
+		case *big.Int:
+			fmt.Println("Product:", v)
+		}
+	}
 
 }
