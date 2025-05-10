@@ -1,3 +1,13 @@
+// You are building a notification system that can send messages via Email and SMS. Each notifier must implement a Send method.
+
+// Define an interface Notifier with a Send(message string) method.
+
+// Create two structs, EmailNotifier and SMSNotifier, that implement the Notifier interface.
+
+// Write a function NotifyUser(n Notifier, message string) that uses the interface to send the notification.
+
+// Demonstrate calling NotifyUser with both types.
+
 package main
 
 import "fmt"
