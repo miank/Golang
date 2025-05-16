@@ -3,43 +3,35 @@ package main
 import (
 	"context"
 	"fmt"
-	"sync"
 	"time"
 )
 
-func worker(ctx context.Context, wg *sync.WaitGroup, id int) {
-	defer wg.Done()
+func worker(ctx context.Context) {
+	fmt.Println("Worker : started")
 
 	for {
 		select {
 		case <-ctx.Done():
-			fmt.Printf("Worker %d received cancellation signal. Exiting... \n ", id)
+			fmt.Println("Worker: cancelled ->", ctx.Err())
 			return
-
 		default:
-			fmt.Printf("Worker %d is working ... \n ", id)
+			fmt.Println("Worker: working...")
 			time.Sleep(500 * time.Millisecond)
 		}
 	}
 }
 
 func main() {
+
 	ctx, cancel := context.WithCancel(context.Background())
 
-	// Create a root context with a 2-second timeout
-
-	// ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
-	var wg sync.WaitGroup
-
-	for i := 0; i < 2; i++ {
-		wg.Add(1)
-		go worker(ctx, &wg, 1)
-	}
+	go worker(ctx)
 
 	time.Sleep(2 * time.Second)
-	fmt.Println("Main: Cancelling the context")
+	fmt.Println("Main: sending cancel signal")
+
 	cancel()
 
-	wg.Wait()
-	fmt.Println("Main: All workers have exited")
+	time.Sleep(1 * time.Second)
+	fmt.Println("Main: done")
 }
