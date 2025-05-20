@@ -1,3 +1,8 @@
+// Find the Most Frequent Element in an Array
+// Problem Statement:
+
+// Given an array of integers, return the element that appears the most number of times. If there are multiple such elements, return any one of them.
+
 package main
 
 import "fmt"
@@ -7,16 +12,13 @@ func main() {
 
 	m1 := make(map[int]int)
 
+	max := 0
+	num := -1
 	for _, v := range arr {
 		m1[v]++
-	}
-
-	max := 0
-	num := 0
-	for k, v := range m1 {
-		if v > max {
-			max = v
-			num = k
+		if m1[v] > max {
+			max = m1[v]
+			num = v
 		}
 	}
 
