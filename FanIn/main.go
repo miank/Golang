@@ -3,79 +3,50 @@ package main
 import (
 	"fmt"
 	"sync"
+	"time"
 )
 
-func someStrings() <-chan string {
-	ch := make(chan string)
-	numbersString := []string{
-		"one", "two", "three", "four", "five",
-		"six", "seven", "eight", "nine", "ten",
+func sendNumbers(nums []int, ch chan<- int) {
+	for _, num := range nums {
+		time.Sleep(time.Millisecond * 100)
+		ch <- num
 	}
 
-	go func() {
-		for _, numberString := range numbersString {
-			ch <- numberString
-		}
-		close(ch)
-	}()
-
-	return ch
+	close(ch) // close the channel
 }
 
-func someNumbers() <-chan string {
-	ch := make(chan string)
-	numbers := []string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}
-
-	go func() {
-		for _, number := range numbers {
-			ch <- number
-		}
-
-		close(ch)
-
-	}()
-
-	return ch
-}
-
-func fanIn(channels ...<-chan string) <-chan string {
+func FanIn(ch1, ch2 <-chan int, out chan<- int) {
 	var wg sync.WaitGroup
+	wg.Add(2)
 
-	multiplexStream := make(chan string)
-
-	multiplex := func(c <-chan string) {
-		defer wg.Done()
-
-		for i := range c {
-			multiplexStream <- i
+	readChannel := func(ch <-chan int) {
+		for num := range ch {
+			out <- num
 		}
+		wg.Done()
 	}
 
-	wg.Add(len(channels))
-
-	for _, c := range channels {
-		go multiplex(c)
-	}
+	go readChannel(ch1)
+	go readChannel(ch2)
 
 	go func() {
 		wg.Wait()
-		close(multiplexStream)
+		close(out)
 	}()
-
-	return multiplexStream
-
 }
 
 func main() {
-	ch1 := someNumbers()
-	ch2 := someStrings()
+	ch1 := make(chan int)
+	ch2 := make(chan int)
+	out := make(chan int)
 
-	mergeCh := fanIn(ch1, ch2)
+	go sendNumbers([]int{1, 2, 3}, ch1)
+	go sendNumbers([]int{4, 5, 6}, ch2)
 
-	go func() {
-		for val := range mergeCh {
-			fmt.Println(val)
-		}
-	}()
+	go FanIn(ch1, ch2, out)
+
+	for num := range out {
+		fmt.Println("Numbers ", num)
+	}
 
 }
