@@ -2,6 +2,10 @@ package main
 
 import "fmt"
 
+func update(m map[string]int) {
+	m["newKey"] = 42
+}
+
 func modifyMap(m map[string]int) {
 	m["Key1"] = 100
 	m["Key2"] = 100
@@ -19,5 +23,9 @@ func main() {
 
 	fmt.Println("Map after modification")
 	fmt.Println(m1)
+
+	m := map[string]int{"a": 1}
+	update(m)
+	fmt.Println(m)
 
 }
