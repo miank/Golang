@@ -2,27 +2,40 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
-func producer(ch chan int) {
-	for i := 0; i < 5; i++ {
-		fmt.Println("producing items ", i)
+func Producer(ch chan int, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	for i := 1; i <= 5; i++ {
 		ch <- i
-		time.Sleep(time.Second)
+		time.Sleep(time.Millisecond * 2)
 	}
+
+	close(ch)
 }
 
-func consumer(ch chan int) {
-	for item := range ch {
-		fmt.Println("Consuming item", item)
-		time.Sleep(2 * time.Second)
+func Consumer(ch chan int, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	for x := range ch {
+		fmt.Println("Consumed ", x)
 	}
+
 }
 
 func main() {
+
 	ch := make(chan int, 2)
-	go producer(ch)
-	go consumer(ch)
-	time.Sleep(10 * time.Second)
+	var wg sync.WaitGroup
+
+	wg.Add(2)
+
+	go Producer(ch, &wg)
+	go Consumer(ch, &wg)
+
+	wg.Wait()
+	//close(ch)
 }
